@@ -44,5 +44,18 @@
         "responses": [
             "search for the cheapest train ticket"
         ]
+    },
+    "Delay Prediction": {
+        "patterns": [
+            "my train is delayed",
+            "delay",
+            "delayed",
+            "train delayed",
+            "train delay",
+            "when will my train arrive?"
+        ],
+        "responses": [
+            "calculate train delay"
+        ]
     }
 }
