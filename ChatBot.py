@@ -7,6 +7,7 @@ import scraper as s
 import DelayPrediction as dp
 from scraper import Ticket 
 from nlp import check_intention_by_keyword
+import time
 
 
 
@@ -16,7 +17,7 @@ chatbot = ChatBot('Mr. Chatbot', trainer = "chatterbot.corpus.english.greetings"
 services = {"search for a stock":singleStock.findStock,
             "search for active stocks":activeStocks.findMostActiveStocks,
             "train ticket": s.findTickets,
-            "Delay Prediction": dp}
+            "delay prediction": dp.display_prediction}
 
 
 # information chatbot needs to collect:
@@ -38,10 +39,12 @@ def main():
 
         intention = check_intention_by_keyword(request)
 
-        if intention.lower() in services:
+        if intention.lower() in services and not "delay prediction":
             c = services[intention.lower()]()
             c.printTicket()
             print("Completed Service")
+        if intention.lower() == "delay prediction":
+            services[intention.lower()]()
         else:
             response = str(chatbot.get_response(request))
             print("Bot: " + response)
@@ -49,8 +52,10 @@ def main():
 
 if __name__ == '__main__':
     try:
+        time.sleep(0.5)
         print("Welcome")
         main()
 
     except KeyboardInterrupt :
         print("Program Interrupted")
+
