@@ -5,6 +5,9 @@ import json
 import re
 
 from csvReader import findStationABV
+from csvReader import findSpecificStation
+
+from nlp import dateTimeFormat
 
 # information chatbot needs to collect:
     # from_station
@@ -40,26 +43,50 @@ class Ticket:
 
 def findTickets():
     #Ask what ..
-    from_station = input('Bot: Enter the name of the station you would like to depart from?\nHuman: ')
-
-    from_station = findStationABV(from_station)    
+    from_station = input('Bot: Enter the name of the station you would like to depart from?\nHuman: ')  
+    
+    from_stations = findSpecificStation(from_station)
+    if len(from_stations) > 1:
+        print('Bot: There are a couple of station that match that name:')
+        for station in from_stations:
+            print(station)
+        from_station = input('Bot: Which of the above stations would you like to go to? \nHuman: ') 
+        from_station = findStationABV(from_station)
+    else:
+        to_station = to_stations[0]
 
     #Ask what ..
     to_station = input('Bot: Enter the name of the station you would like to go: \nHuman: ')    
-
-    to_station = findStationABV(to_station)
+    #Ask what ...
+    to_stations = findSpecificStation(to_station)
+    
+    if len(to_stations) > 1:
+        print('Bot: There are a couple of station that match that name:')
+        for station in to_stations:
+            print(station)
+        to_station = input('Bot: Which of the above stations would you like to go to? \nHuman: ') 
+        to_station = findStationABV(to_station)
+    else:
+        to_station = to_stations[0]
 
     #Ask what ...
-    departure_date = input('Bot: Enter the date you would like to depart: \nHuman: ')    
+    departure_date = input('Bot: Enter the date you would like to depart: \nHuman: ') 
+    #Ask what ...
+    if str(departure_date) != 'today' and str(departure_date) !=  'tomorrow':
+        departure_date = dateTimeFormat(str(departure_date))   
     #Ask what..
     departure_time = input('Bot: Enter the time you would like to depart: \nHuman: ')
     #Ask what..
-    return_date = input('Bot: Enter the date you would like to return or None: \n Human:')   
+    return_date = input('Bot: Enter the date you would like to return or None: \nHuman:')   
     #Ask what..
+    if str(return_date) != 'today' and str(departure_date) !=  'tomorrow':
+        return_date = dateTimeFormat(str(return_date))
+
+    # form url to scrape
     if return_date != "None":
-        return_time = input('Enter the time you would like to return: Human:')
+        return_time = input('Enter the time you would like to return: \nHuman:')
         html_page = f'''https://ojp.nationalrail.co.uk/service/timesandfares/{from_station}/{to_station}/{departure_date}/{departure_time}/dep/{return_date}/{return_time}/dep'''
-        print(html_page)
+        # print(html_page)
         ticketType = 'return'
     else:
         html_page = f'''https://ojp.nationalrail.co.uk/service/timesandfares/{from_station}/{to_station}/{departure_date}/{departure_time}/dep/{return_date}/{return_time}/dep'''
