@@ -1,11 +1,11 @@
 from chatterbot import ChatBot
-from googletrans import Translator as tl
-from wit import Wit as wit
 import scraper as s
 import DelayPrediction as dp
 from scraper import Ticket 
 from nlp import check_intention_by_keyword
 import time
+
+
 
 chatbot = ChatBot('Mr. Chatbot', trainer = "chatterbot.corpus.english.greetings")
 
@@ -24,8 +24,6 @@ services = {"train ticket": s.findTickets,
 
 
 def main():
-    # print("What language would you like your text translated to?")
-    # lang = wit.interactive().lower()
 
     while True:
 
@@ -34,7 +32,8 @@ def main():
 
         intention = check_intention_by_keyword(request)
 
-        if intention.lower() in services and not "delay prediction":
+
+        if intention.lower() in services and intention.lower() != "delay prediction":
             c = services[intention.lower()]()
             c.printTicket()
             print("Completed Service")
@@ -42,17 +41,16 @@ def main():
             services[intention.lower()]()
             print("Completed Service")
             
-        
-
+    
         else:
-            response = str(chatbot.get_response(request))
-            print("Bot: " + response)
+            # response = str(chatbot.get_response(request))
+            print("Bot: Sorry I don't understand that. Please rephrase your statement.")
 
 
 if __name__ == '__main__':
     try:
         time.sleep(0.5)
-        print("Welcome")
+        print("Welcome, I'm a chatbot built to help you travel, how can I help you today?")
         main()
 
     except KeyboardInterrupt :

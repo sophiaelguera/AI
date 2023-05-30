@@ -26,12 +26,12 @@ def findSpecificStation(station):
 
         for row in reader_obj:
             if row[0] == station.upper():
-                values.append(row[0])    
-            if row[3] == station.upper():
+                values.append(row[0])   
+            elif row[3] == station.upper():
                 return station
-            if row[1] == station:
+            elif row[1] == station:
                 values.append(row[0])            
-            if station.upper() in row[0]:
+            elif station.upper() in row[0]:
                 values.append(row[0])  
     return values
 

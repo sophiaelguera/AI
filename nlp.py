@@ -17,18 +17,34 @@ from experta import *
 import spacy.cli
 # spacy.cli.download("en_core_web_sm")
 
-def dateTimeFormat(date):
-    try:
+def dateFormat(date):
+
+    cleaned_user_date = lemmatize_and_clean(date)
         # Parse the user input using dateutil.parser
-        date_obj = parser.parse(date)
+    date_obj = parser.parse(cleaned_user_date)
 
-        # Format the date as DDMMYYYY
-        formatted_date = date_obj.strftime("%d%m%Y")
-        return formatted_date
+    # Format the date as DDMMYYYY
+    formatted_date = date_obj.strftime("%d%m%Y")
+    # print("Formatted date:", formatted_date)
+    return formatted_date
 
-        # print("Formatted date:", formatted_date)
+    
+
+    # except ValueError:
+    #     print("Invalid date. Please enter a valid date.")
+
+def timeFormat(time):
+    try:
+        cleaned_user_time = lemmatize_and_clean(time)
+        # Parse the user input using dateutil.parser
+        time_obj = parser.parse(cleaned_user_time, default=datetime.now())
+
+        # Format the time as 2000
+        formatted_time = time_obj.strftime("%H%M")
+
+        return formatted_time
     except ValueError:
-        print("Invalid date. Please enter a valid date.")
+        print("Invalid time. Please enter a valid time.")
 
 intentions_path = "intentions.json"
 sentences_path = "sentences.txt"
@@ -105,8 +121,8 @@ def lemmatize_and_clean(text):
             out = out + token.lemma_ + " "
     return out.strip()
 
-# sample_user_input = "Tell me the time!"
-# lemmatize_and_clean(sample_user_input)
+sample_user_input = "after 1500"
+print(lemmatize_and_clean(sample_user_input))
 
 
 final_chatbot = False
