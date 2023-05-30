@@ -1,8 +1,7 @@
-import pandas as pd
 from bs4 import BeautifulSoup
 import requests
 import json
-import re
+
 
 from csvReader import findStationABV
 from csvReader import findSpecificStation
@@ -10,7 +9,7 @@ from csvReader import findSpecificStation
 from nlp import dateFormat
 from nlp import timeFormat
 
-# information chatbot needs to collect:
+# information chatbot needs to collect from user through conversation:
     # from_station
     # to_station
     # departure_date
@@ -18,6 +17,7 @@ from nlp import timeFormat
     # return_date
     # return_time
 
+# Ticket class to store all the information gathered about the cheapest train ticket and a method to print the ticket so the user can see and access it
 class Ticket:
     def __init__(self, from_station, to_station, departure_date, departure_time, return_date,  return_time, ticketPrice, ticketType, url):
         self.from_station = from_station
@@ -31,7 +31,7 @@ class Ticket:
         self.url = url
     
     def printTicket(self):
-        print("\nThe cheapest ticket for the date and times you provided is:\n" 
+        print("\nThe cheapest ticket for your journey is:\n" 
               + "Departing from:    " + self.from_station + "\n" +
                "Arriving at:    " + self.to_station + "\n" +
                "Departure Date:    " + self.departure_date + "\n" +
@@ -42,9 +42,14 @@ class Ticket:
                "Ticket Type:     " + self.ticketType + "\n" +
                "Url:          " + self.url)
 
+# Method to prompt the user through a conversation about their journey and gather all necessary info
+# This method then creates a url for the user journey that corresponds to the journey on the national rail website
+# Then the website parses through the json to find the tickets presented on that page
+# Calls on findCheapestTickets(tickets) to find the cheapest ticket from the journeys on the page
+# Creates a Ticket object that stores all the necessary info and returns it
 def findTickets():
     #Ask what ..
-    from_station = input('Bot: Enter the name of the station you would like to depart from?\nHuman: ')  
+    from_station = input('Bot: Can you tell me the name of the station you would like to depart from?\nHuman: ')  
     
     from_stations = findSpecificStation(from_station)
 
@@ -72,16 +77,16 @@ def findTickets():
         to_station = to_stations[0]
 
     #Ask what ...
-    departure_date = input('Bot: Enter the date you would like to depart: \nHuman: ') 
+    departure_date = input('Bot: What day you would like to depart? \nHuman: ') 
     #Ask what ...
     if str(departure_date) != 'today' and str(departure_date) !=  'tomorrow':
         departure_date = dateFormat(str(departure_date))   
     #Ask what..
-    departure_time = input('Bot: Enter the time you would like to depart: \nHuman: ')
+    departure_time = input('Bot: What time you would like to depart: \nHuman: ')
 
     departure_time = timeFormat(departure_time)
     #Ask what..
-    return_date = input('Bot: Enter the date you would like to return or None: \nHuman:')   
+    return_date = input('Bot: What date would you like to return or type None if you would like a single ticket: \nHuman:')   
     #Ask what..
     if str(return_date) != 'today' and str(return_date) !=  'tomorrow' and str(return_date) != "None":
         return_date = dateFormat(str(return_date))

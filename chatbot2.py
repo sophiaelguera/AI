@@ -12,7 +12,7 @@ def main():
 
     final_chatbot = True
     flag=True
-    print("BOT: Hi there! How can I help you?.\n (If you want to exit, just type bye!)") 
+    print("Bot: Hi there! How can I help you?.\n (If you want to exit, just type bye!)") 
     while(flag==True):  
        
         user_input = input("Human: ")
@@ -27,14 +27,14 @@ def main():
                 if intention.lower() in services and intention.lower() != "delay prediction":
                     c = services[intention.lower()]()
                     c.printTicket()
-                    print("Completed Service")
+
                 elif intention.lower() == "delay prediction":
                     services[intention.lower()]()
-                    print("Completed Service")
+
 
 
         else: 
-            print("BOT: Sorry I don't understand that. Please rephrase your statement.")
+            print("Bot: Sorry I don't understand that. Please rephrase your statement.")
         
 
               
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     try:
         time.sleep(0.5)
         main()
-        print("Service Completed\n BOT: Can I help with anything else?")
+        print("Service Completed")
 
     except KeyboardInterrupt :
         print("Program Interrupted")

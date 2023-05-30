@@ -14,7 +14,7 @@ class Book(Fact):
 class TrainBot(KnowledgeEngine):
   @Rule(Book(service='train ticket'))
   def one_way(self):
-    print("BOT: You have selected train ticket. ")
+    print("\nBot: Ok! I will need a little bit of information about your journey! ")
     if final_chatbot:
       ticket = s.findTickets()
       ticket.printTicket()
@@ -23,9 +23,10 @@ class TrainBot(KnowledgeEngine):
 
   @Rule(Book(service='delay prediction'))
   def round_way(self):
-    print("BOT: You have selected a delay prediction.")
+    print("Bot: You have selected a delay prediction.")
     if final_chatbot:
       dp.display_prediction()
+      print("\nBot: Can I help you with anything else?")
 
 
 def check_ticket(user_input):
@@ -49,7 +50,3 @@ def expert_response(user_input):
         return True
     
     return False
-
-# sample_user_input = "I want to find the cheapest train ticket"
-# print(sample_user_input)
-# expert_response(sample_user_input)

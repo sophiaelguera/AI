@@ -1,10 +1,5 @@
-import random
 import json
 import spacy
-import difflib
-from difflib import get_close_matches, SequenceMatcher
-import requests
-from bs4 import BeautifulSoup
 from datetime import datetime
 import warnings
 warnings.filterwarnings('ignore')
