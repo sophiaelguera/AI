@@ -19,7 +19,7 @@ from nlp import timeFormat
     # return_time
 
 class Ticket:
-    def __init__(self, from_station, to_station, departure_date, departure_time, return_date,  return_time, ticketPrice, ticketType):
+    def __init__(self, from_station, to_station, departure_date, departure_time, return_date,  return_time, ticketPrice, ticketType, url):
         self.from_station = from_station
         self.to_station = to_station
         self.departure_date = departure_date
@@ -28,17 +28,19 @@ class Ticket:
         self.return_time = return_time
         self.ticketPrice = ticketPrice
         self.ticketType = ticketType
+        self.url = url
     
     def printTicket(self):
         print("\nThe cheapest ticket for the date and times you provided is:\n" 
-              + "Dparting from:    " + self.from_station + "\n" +
+              + "Departing from:    " + self.from_station + "\n" +
                "Arriving at:    " + self.to_station + "\n" +
                "Departure Date:    " + self.departure_date + "\n" +
                "Departure Time:    " + self.departure_time + "\n" +
                "Return Date:    " + self.return_date + "\n" +
                "Return Time:    " + self.return_time + "\n" +
                "Ticket Price:    " + self.ticketPrice + "\n" +
-               "Ticket Type:     " + self.ticketType)
+               "Ticket Type:     " + self.ticketType + "\n" +
+               "Url:          " + self.url)
 
 def findTickets():
     #Ask what ..
@@ -130,7 +132,7 @@ def findTickets():
                 ticketPrice = j
 
 
-    theCheapestTicket = Ticket(from_station, to_station, departure_date, str(departure_time), return_date, str(return_time), str(ticketPrice), ticketType)
+    theCheapestTicket = Ticket(from_station, to_station, departure_date, str(departure_time), return_date, str(return_time), str(ticketPrice), ticketType, str(html_page))
 
     return theCheapestTicket
 
@@ -146,35 +148,3 @@ def findCheapestTickets(tickets):
                 cheapestTicket = ticket
     return cheapestTicket
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-# url = f'''https://ojp.nationalrail.co.uk/service/timesandfares/NRW/BFR/today/1215/dep'''
-
-# f = requests.get(url)
-
-# soup = BeautifulSoup(f.text, features="html.parser")
-
-# # print(soup.get_text())
-
-# for i in soup.findAll("div",{"class":"single clear false has-alt-trains"}):
-#     print((i.find("span",{"class":"fare-breakdown"})).text)
-
-# journey_type = "single"
-# return_date= "11/05/2023"
-
-# if return_date == None:
-#     url = f'''https://ojp.nationalrail.co.uk/service/timesandfares/{"NRW"}/{"LGX"}/{"today"}/{"12:15"}/dep'''
-# else:
-#     journey_type = "return"
-#     # url = f'''https://ojp.nationalrail.co.uk/service/timesandfares/{from_station}/{to_station}/{departure_date}/{departure_time}/dep/{return_date}/{return_time}/dep'''    

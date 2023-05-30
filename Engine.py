@@ -18,6 +18,8 @@ class TrainBot(KnowledgeEngine):
     if final_chatbot:
       ticket = s.findTickets()
       ticket.printTicket()
+      print("\nBot: you may click the link above to purchase you train ticket, safe travels!\n")
+      print("Bot: Can I help you with anything else?")
 
   @Rule(Book(service='delay prediction'))
   def round_way(self):
@@ -48,6 +50,6 @@ def expert_response(user_input):
     
     return False
 
-sample_user_input = "I want to find the cheapest train ticket"
-print(sample_user_input)
-expert_response(sample_user_input)
+# sample_user_input = "I want to find the cheapest train ticket"
+# print(sample_user_input)
+# expert_response(sample_user_input)

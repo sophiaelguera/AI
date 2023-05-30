@@ -39,7 +39,9 @@
             "search for cheapest train ticket",
             "i would like to buy a train ticket",
             "train ticket",
-            "cheapest train ticket"
+            "cheapest train ticket",
+            "I would like to find the cheapest train ticket",
+            "I would like to buy the cheapest train ticket"
         ],
         "responses": [
             "search for the cheapest train ticket"
@@ -53,7 +55,8 @@
             "train delayed",
             "train delay",
             "when will my train arrive?",
-            "delay prediction"
+            "delay prediction",
+            "I would like to know the time of my trains arrival"
         ],
         "responses": [
             "calculate train delay"
