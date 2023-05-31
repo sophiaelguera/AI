@@ -25,6 +25,8 @@ def findSpecificStation(station):
         reader_obj = csv.reader(file_obj)
 
         for row in reader_obj:
+            if station == 'London':
+                return station
             if row[0] == station.upper():
                 values.append(row[0])   
             elif row[3] == station.upper():

@@ -8,6 +8,7 @@ from csvReader import findSpecificStation
 
 from nlp import dateFormat
 from nlp import timeFormat
+from nlp import arriveBy
 
 # information chatbot needs to collect from user through conversation:
     # from_station
@@ -67,12 +68,14 @@ def findTickets():
     #Ask what ...
     to_stations = findSpecificStation(to_station)
     
-    if len(to_stations) > 1:
+    if len(to_stations) > 1 and to_stations != 'London':
         print('Bot: There are a couple of station that match that name:')
         for station in to_stations:
             print(station)
         to_station = input('Bot: Which of the above stations would you like to go to? \nHuman: ') 
         to_station = findStationABV(to_station)
+    elif to_stations == 'London':
+        to_station == 'London'
     else:
         to_station = to_stations[0]
 
@@ -85,11 +88,14 @@ def findTickets():
     departure_time = input('Bot: What time you would like to depart: \nHuman: ')
 
     departure_time = timeFormat(departure_time)
+
+    arrive = arriveBy(departure_time)
     #Ask what..
     return_date = input('Bot: What date would you like to return or type None if you would like a single ticket: \nHuman:')   
     #Ask what..
     if str(return_date) != 'today' and str(return_date) !=  'tomorrow' and str(return_date) != "None":
         return_date = dateFormat(str(return_date))
+        arrive = arriveBy(return_date)
     elif str(return_date) == "None":
         return_date = None
 
@@ -102,7 +108,7 @@ def findTickets():
     else:
         return_time = input('Enter the time you would like to return: \nHuman:')
         return_time = timeFormat(return_time)
-        html_page = f'''https://ojp.nationalrail.co.uk/service/timesandfares/{from_station}/{to_station}/{departure_date}/{departure_time}/dep/{return_date}/{return_time}/dep'''
+        html_page = f'''https://ojp.nationalrail.co.uk/service/timesandfares/{from_station}/{to_station}/{departure_date}/{departure_time}/{arrive}/{return_date}/{return_time}/{arrive}'''
         # print(html_page)
         ticketType = 'return'
 

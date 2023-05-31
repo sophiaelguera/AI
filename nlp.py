@@ -33,6 +33,13 @@ def timeFormat(time):
 
     return formatted_time
 
+def arriveBy(time):
+    if 'before' in time:
+        arriveBy = 'arr'
+    else:
+        arriveBy = 'dep'
+    return arriveBy
+
 
 intentions_path = "intentions.json"
 sentences_path = "sentences.txt"
@@ -44,7 +51,6 @@ final_chatbot = False
 
 
 def check_intention_by_keyword(sentence):
-
         for type_of_intention in intentions:
             if sentence.lower() in intentions[type_of_intention]["patterns"]:
                 return type_of_intention
