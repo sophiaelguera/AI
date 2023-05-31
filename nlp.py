@@ -12,6 +12,8 @@ from experta import *
 import spacy.cli
 # spacy.cli.download("en_core_web_sm")
 
+# Method created to format user inputted date in any format and return the correct format needed for web scraping
+# format needed is DDMMYYYY
 def dateFormat(date):
 
     cleaned_user_date = lemmatize_and_clean(date)
@@ -23,6 +25,8 @@ def dateFormat(date):
     # print("Formatted date:", formatted_date)
     return formatted_date
 
+# Method created to format user inputted time in any format and return the correct format needed for web scraping
+# format needed is 2000
 def timeFormat(time):
     cleaned_user_time = lemmatize_and_clean(time)
     # Parse the user input using dateutil.parser
@@ -33,6 +37,9 @@ def timeFormat(time):
 
     return formatted_time
 
+# Method to handle key words like before 
+# If user would like to arrive at the destination before a certain time this method returns 
+# the correct key word for the url and web scraping
 def arriveBy(time):
     if 'before' in time:
         arriveBy = 'arr'
@@ -49,26 +56,16 @@ with open(intentions_path) as f:
 
 final_chatbot = False
 
-
+# Method to check the intention of the user input, returns the type of intention
 def check_intention_by_keyword(sentence):
         for type_of_intention in intentions:
             if sentence.lower() in intentions[type_of_intention]["patterns"]:
                 return type_of_intention
 
 
-time_sentences = ''
-date_sentences = ''
-with open(sentences_path) as file:
-    for line in file:
-        parts = line.split(' | ')
-        if parts[0] == 'time':
-            time_sentences = time_sentences + ' ' + parts[1].strip()
-        elif parts[0] == 'date':
-            date_sentences = date_sentences + ' ' + parts[1].strip()
 
-
+# Method to clean user input and remove stop words and punctuation
 nlp = spacy.load('en_core_web_sm')
-
 def lemmatize_and_clean(text):
     doc = nlp(text.lower())
     out = ""

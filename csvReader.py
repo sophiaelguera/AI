@@ -1,5 +1,7 @@
 import csv
 
+
+#Method to read through csv and match user input to correct station name and abbreviation for web scraping
 def findStationABV(station):
   
     with open('stations.csv') as file_obj:
@@ -19,6 +21,7 @@ def findStationABV(station):
                 value = row[3]
                 return value
 
+# Method to help deal with user input ambiguity, returns a list of all stations that match the name parameter
 def findSpecificStation(station): 
     with open('stations.csv') as file_obj:
         values = []
@@ -38,6 +41,7 @@ def findSpecificStation(station):
     return values
 
 
+# method that matches station name with station long abreviation
 def findStationLongABV(station):
 
     with open('stations.csv') as file_obj:

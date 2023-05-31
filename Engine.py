@@ -11,6 +11,8 @@ class Book(Fact):
     """Info about the chatbot services."""
     pass
 
+# Set of rules to recognize intent and part of the reasongin engine of the chatbot
+# Based on the rules the chat bot can make a desicion on which service the user is requesting based on their intent
 class TrainBot(KnowledgeEngine):
   @Rule(Book(service='train ticket'))
   def one_way(self):
@@ -28,7 +30,7 @@ class TrainBot(KnowledgeEngine):
       dp.display_prediction()
       print("\nBot: Can I help you with anything else?")
 
-
+# method to decide which service the user is requesting and returning it.
 def check_ticket(user_input):
   user_input = user_input.lower()
   service_list = ['train ticket', 'delay prediction']    
@@ -39,7 +41,7 @@ def check_ticket(user_input):
   
   return None
   
-
+# method to generate the response based on the intent and reasoning 
 def expert_response(user_input):
     engine = TrainBot()
     engine.reset()

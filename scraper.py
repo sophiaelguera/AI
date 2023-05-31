@@ -104,15 +104,13 @@ def findTickets():
     if return_date == None or return_date == "None":
         html_page = f'''https://ojp.nationalrail.co.uk/service/timesandfares/{from_station}/{to_station}/{departure_date}/{departure_time}/dep'''
         ticketType = 'single'
-        # print(html_page)
     else:
         return_time = input('Enter the time you would like to return: \nHuman:')
         return_time = timeFormat(return_time)
         html_page = f'''https://ojp.nationalrail.co.uk/service/timesandfares/{from_station}/{to_station}/{departure_date}/{departure_time}/{arrive}/{return_date}/{return_time}/{arrive}'''
-        # print(html_page)
         ticketType = 'return'
 
-    #Parse the html using beautfil soup and store in the variable 'soup'
+    #Parse the html using beautifulsoup and store in the variable 'soup'
     soup = BeautifulSoup(requests.get(html_page).text, 'html.parser')
 
     #Get the price
@@ -148,6 +146,7 @@ def findTickets():
     return theCheapestTicket
 
 
+# method to find cheapest ticket in a list of tickets
 def findCheapestTickets(tickets):
     cheapestFare = 9999999
 
